@@ -60,6 +60,16 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
+      <Paper component="ul" sx={{...root}}>
+        <li>
+          <Chip label="Production Countries" sx={{...chip}} color="primary" />
+        </li>
+        {movie.production_countries?.map((country) => (
+          <li key={country.iso_3166_1}>
+            <Chip label={country.name} sx={{...chip}} />
+          </li>
+        ))}
+      </Paper>
            <Fab
         color="secondary"
         variant="extended"
@@ -77,6 +87,10 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         <MovieReviews movie={movie} />
       </Drawer>
       </>
+
+      
   );
 };
 export default MovieDetails ;
+
+

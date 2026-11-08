@@ -11,6 +11,9 @@ import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
 import {useState, useEffect}  from "react";
 import { getGenres } from "../../api/tmdb-api";
+import { useQuery } from '@tanstack/react-query';
+import Spinner from '../spinner';
+
 
 const formControl = 
   {

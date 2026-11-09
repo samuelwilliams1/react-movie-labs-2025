@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import Button from "@mui/material/Button";
+import { MoviesContext } from "../contexts/moviesContext";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 const UpcomingMoviesPage = () => {
+  const { addToFavorites: addFavorite } = useContext(MoviesContext);
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
 
@@ -60,13 +64,14 @@ const UpcomingMoviesPage = () => {
     return <p role="alert">{error}</p>;
   }
 
-  return (
-    <PageTemplate
-      title="Upcoming Movies"
-      movies={movies}
-      selectFavorite={addToFavorites}
-    />
-  );
+return (
+  <PageTemplate
+    title="Upcoming Movies"
+    movies={movies}
+    action={() => <PlaylistAddIcon />}
+  />
+);
+
 };
 
 export default UpcomingMoviesPage;

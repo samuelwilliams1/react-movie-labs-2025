@@ -10,6 +10,8 @@ import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import MoviesContextProvider from "./contexts/moviesContext";
+import TVShowsPage from "./pages/tvShowsPage";
+import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 
 
 const queryClient = new QueryClient({
@@ -36,6 +38,9 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="*" element={ <Navigate to="/" /> } />
           <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+          <Route path="/tv" element={<TVShowsPage />} />
+          <Route path="/movies/now-playing" element={<NowPlayingMoviesPage />}
+/>
         </Routes>
        </MoviesContextProvider>
       </BrowserRouter>

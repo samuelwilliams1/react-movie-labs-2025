@@ -4,11 +4,13 @@ import { getUpcomingMovies } from "../api/tmdb-api";
 import Button from "@mui/material/Button";
 import { MoviesContext } from "../contexts/moviesContext";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import IconButton from "@mui/material/IconButton";
 
 const UpcomingMoviesPage = () => {
   const { addToFavorites: addFavorite } = useContext(MoviesContext);
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
+  const { addToMustWatch } = useContext(MoviesContext);
 
   const addToFavorites = (movieId) => {
     const selectedMovie = movies.find(movie => movie.id === movieId);
@@ -68,7 +70,14 @@ return (
   <PageTemplate
     title="Upcoming Movies"
     movies={movies}
-    action={() => <PlaylistAddIcon />}
+    action={(movie) => (
+      <IconButton
+        aria-label="Add to must watch"
+        onClick={() => addToMustWatch(movie)}
+      >
+        <PlaylistAddIcon />
+      </IconButton>
+    )}
   />
 );
 

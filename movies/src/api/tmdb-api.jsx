@@ -113,4 +113,21 @@ export const getTopRatedMovies = () => {
     .then(json => json.results);
 };
 
+export const getMovieWatchProviders = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  ).then(async (res) => {
+    const json = await res.json();
 
+    console.log("Watch providers movie ID:", id);
+    console.log("Watch providers response:", json);
+
+    if (!res.ok || json.success === false) {
+      throw new Error(
+        json.status_message || "Could not load watch providers."
+      );
+    }
+
+    return json.results;
+  });
+};

@@ -1,3 +1,16 @@
+const readJSON = async (response) => {
+  const json = await response.json();
+
+  if (!response.ok || json.success === false) {
+    throw new Error(
+      json.status_message || "Could not load TMDB data."
+    );
+  }
+
+  return json;
+};
+
+
 export const getMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
@@ -5,7 +18,7 @@ export const getMovies = () => {
     if (!response.ok) {
       return response.json().then((error) => {
         throw new Error(error.status_message || "Something went wrong");
-      });
+      });  
     }
     return response.json();
   })
@@ -39,7 +52,7 @@ export const getUpcomingMovies = id => {
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}`
   )
-    .then(res => res.json())
+    .then(readJSON)
     .then(json => json.results);
 };
 
@@ -49,7 +62,7 @@ export const getGenres = () => {
       import.meta.env.VITE_TMDB_KEY +
       "&language=en-US"
   )
-    .then(res => res.json())
+    .then(readJSON)
     .then(json => json.genres);
 };
 
@@ -93,7 +106,7 @@ export const getGenres = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&sort_by=popularity.desc&page=1`
   )
-    .then(res => res.json())
+    .then(readJSON)
     .then(json => json.results);
 };
 
@@ -101,7 +114,7 @@ export const getNowPlayingMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
   )
-    .then(res => res.json())
+    .then(readJSON)
     .then(json => json.results);
 };
 
@@ -109,7 +122,7 @@ export const getTopRatedMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
   )
-    .then(res => res.json())
+    .then(readJSON)
     .then(json => json.results);
 };
 
@@ -129,5 +142,29 @@ export const getMovieWatchProviders = (id) => {
     }
 
     return json.results;
+  });
+};
+
+export const getTVWatchProviders = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  )
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Could not load TV watch providers.");
+      }
+      return res.json();
+    })
+    .then(json => json.results);
+};
+
+export const getTVShow = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+  ).then(res => {
+    if (!res.ok) {
+      throw new Error("Could not load TV show details.");
+    }
+    return res.json();
   });
 };

@@ -1,3 +1,4 @@
+import TVDetailsPage from "./pages/tvDetailsPage";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import SiteHeader from './components/siteHeader'
 import MovieReviewPage from "./pages/movieReviewPage";
@@ -13,6 +14,7 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import TVShowsPage from "./pages/tvShowsPage";
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
+import MustWatchMoviesPage from "./pages/mustWatchMoviesPage";
 
 
 const queryClient = new QueryClient({
@@ -42,6 +44,8 @@ const App = () => {
           <Route path="/tv" element={<TVShowsPage />} />
           <Route path="/movies/now-playing" element={<NowPlayingMoviesPage />} />
           <Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
+          <Route path="/tv/:id" element={<TVDetailsPage />} />
+          <Route path="/movies/mustwatch" element={<MustWatchMoviesPage />} />
         </Routes>
        </MoviesContextProvider>
       </BrowserRouter>

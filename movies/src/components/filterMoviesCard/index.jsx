@@ -9,7 +9,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
-import {useState, useEffect}  from "react";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../spinner';
@@ -24,15 +23,26 @@ const formControl =
 
 export default function FilterMoviesCard(props) {
 
-const [genres, setGenres] = useState([{ id: '0', name: "All" }])
+const {
+  data: allGenres = [],
+  isPending,
+  isError,
+  error,
+} = useQuery({
+  queryKey: ["genres"],
+  queryFn: getGenres,
+});
 
-    useEffect(() => {
-    getGenres().then((allGenres) => {
-      setGenres([genres[0], ...allGenres]);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+const genres = [
+  { id: "0", name: "All" },
+  ...allGenres,
+];
 
+if (isPending) return <Spinner />;
+
+if (isError) {
+  return <Typography role="alert">{error.message}</Typography>;
+}
 
   const handleChange = (e, type, value) => {
     e.preventDefault()

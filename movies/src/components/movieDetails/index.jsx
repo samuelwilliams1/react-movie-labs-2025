@@ -7,6 +7,7 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import { useState, useEffect} from "react";
+import {useQuery } from "@tanstack/react-query";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import { getMovieWatchProviders } from "../../api/tmdb-api";
@@ -23,11 +24,20 @@ const root = {
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => {  // Don't miss this!
+const MovieDetails = ({ movie }) => {  
 const [drawerOpen, setDrawerOpen] = useState(false);
-const [providers, setProviders] = useState([]);
-const [providersLoading, setProvidersLoading] = useState(true);
-const [providersError, setProvidersError] = useState("");
+const {
+    data: providersResults,
+    isPending: providersLoading,
+    error: providerError,
+} = useQuery({
+    queryKey: ["movieWatchProviders", { id: String(movie.id) }],
+    queryFn: () => getMovieWatchProviders(movie.id),
+    enabled: Boolean(movie.id), // Only run the query if movie.id is truthy
+});
+
+const providers = providersResults?.IE ?? null; // Get the Ireland watch providers or null if not available
+const providersError = providerError?.message || "Error fetching watch providers"; // Get the error message if available
 
 useEffect(() => {
     let active = true;

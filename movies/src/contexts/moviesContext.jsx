@@ -15,6 +15,12 @@ const addToMustWatch = (movie) => {
   );
 };
 
+const removeFromMustWatch = (movie) => {
+  setMustWatch((current) =>
+    current.filter((movieId) => movieId !== movie.id)
+  );
+};
+
 console.log("Must Watch:", mustWatch); 
 
 
@@ -51,6 +57,7 @@ console.log("Must Watch:", mustWatch);
         addReview,
         mustWatch,
         addToMustWatch,
+        removeFromMustWatch,
       }}
     >
       {props.children}

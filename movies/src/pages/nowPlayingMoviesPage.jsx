@@ -1,70 +1,27 @@
-import { useState, useEffect, useContext } from "react";
+import {useContext } from "react";
+import {useQuery } from "@tanstack/react-query";
+import Spinner from "../components/spinner";
 import PageTemplate from "../components/templateMovieListPage";
 import { getNowPlayingMovies } from "../api/tmdb-api";
-import Button from "@mui/material/Button";
 import { MoviesContext } from "../contexts/moviesContext";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import IconButton from "@mui/material/IconButton";
 
 const NowPlayingMoviesPage = () => {
-  const { addToFavorites: addFavorite } = useContext(MoviesContext);
-  const [movies, setMovies] = useState([]);
-  const [error, setError] = useState("");
   const { addToMustWatch } = useContext(MoviesContext);
 
-  const addToFavorites = (movieId) => {
-    const selectedMovie = movies.find(movie => movie.id === movieId);
-    if (!selectedMovie) return;
+    const {
+      data: movies = [],
+      error,
+      isPending,
+      isError,
+    } = useQuery({
+      queryKey: ["nowPlayingMovies"],
+      queryFn: getNowPlayingMovies,
+    });
 
-    const favorites = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
-
-    if (!favorites.some(movie => movie.id === movieId)) {
-      localStorage.setItem(
-        "favorites",
-        JSON.stringify([
-          ...favorites,
-          { ...selectedMovie, favorite: true }
-        ])
-      );
-    }
-
-    setMovies(currentMovies =>
-      currentMovies.map(movie =>
-        movie.id === movieId
-          ? { ...movie, favorite: true }
-          : movie
-      )
-    );
-  };
-
-  useEffect(() => {
-    getNowPlayingMovies()
-      .then(movies => {
-        if (!Array.isArray(movies)) {
-          throw new Error("Could not load now playing movies.");
-        }
-
-        const favorites = JSON.parse(
-          localStorage.getItem("favorites") || "[]"
-        );
-
-        setMovies(
-          movies.map(movie => ({
-            ...movie,
-            favorite: favorites.some(
-              favorite => favorite.id === movie.id
-            )
-          }))
-        );
-      })
-      .catch(error => setError(error.message));
-  }, []);
-
-  if (error) {
-    return <p role="alert">{error}</p>;
-  }
+  if (isPending) return <Spinner />;
+  if (isError) return <p role="alert">{error.message}</p>;
 
 return (
   <PageTemplate

@@ -32,6 +32,7 @@ const SiteHeader = () => {
     { label: "Top Rated", path: "/movies/top-rated" },
     { label: "Must Watch", path: "/movies/mustwatch" },
   ];
+  
 
   const handleMenuSelect = (pageURL) => {
     setAnchorEl(null);

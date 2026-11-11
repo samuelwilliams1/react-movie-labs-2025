@@ -58,9 +58,7 @@ export const getUpcomingMovies = id => {
 
 export const getGenres = () => {
   return fetch(
-    "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-      import.meta.env.VITE_TMDB_KEY +
-      "&language=en-US"
+    `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY}`
   )
     .then(readJSON)
     .then(json => json.genres);
@@ -128,7 +126,7 @@ export const getTopRatedMovies = () => {
 
 export const getMovieWatchProviders = (id) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
   ).then(async (res) => {
     const json = await res.json();
 

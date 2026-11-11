@@ -37,9 +37,7 @@ const MustWatchMoviesPage = () => {
 
   return (
     <>
-      {movieIds.length === 0 && (
-        <p>Add movies using the Must Watch button on a movie card.</p>
-      )}
+    
 
       <PageTemplate
         title="Must Watch Movies"

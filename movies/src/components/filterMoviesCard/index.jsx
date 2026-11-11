@@ -49,10 +49,19 @@ if (isError) {
     props.onUserInput(type, value)   // NEW
   };
   const handleTextChange = e => {
-    handleChange(e, "name", e.target.value)
-  }
+    handleChange(e, "name", e.target.value);
+  };
+
+  const handleYearChange = (e) => {
+  handleChange(e, "year", e.target.value);
+};
+
   const handleGenreChange = e => {
-    handleChange(e, "genre", e.target.value)
+    handleChange(e, "genre", e.target.value);
+  };
+
+  const handleRatingChange = (e) => {
+    handleChange(e, "rating", e.target.value);
   };
 
 
@@ -94,6 +103,40 @@ if (isError) {
             })}
           </Select>
         </FormControl>
+        <FormControl sx={{ ...formControl}}>
+            <Select
+            id="rating-select"
+            value={props.ratingFilter}
+            onChange={handleRatingChange}
+            >
+                <MenuItem value="0">All ratings</MenuItem>
+                {[5, 6, 7, 8, 9].map((rating) => (
+                  <MenuItem key={rating} value={String(rating)}>
+                    {rating}+
+                  </MenuItem>  
+                ))}
+            </Select>
+        </FormControl>
+
+        <FormControl sx={{ ...formControl }}>
+            <InputLabel id="year-label">Release year</InputLabel>
+            <Select
+            labelId="year-label"
+            id="year-select"
+            label="Release year"
+            value={props.yearFilter}
+            onChange={handleYearChange}
+            >
+               <MenuItem value="">All years</MenuItem>
+               {props.years.map((year) => (
+                <MenuItem key={year} value={year}>
+                    {year}
+                </MenuItem>
+               ))}
+            </Select>
+        </FormControl>
+
+
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}

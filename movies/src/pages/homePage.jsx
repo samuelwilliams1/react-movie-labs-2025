@@ -9,10 +9,12 @@ import Box from "@mui/material/Box";
 
 const HomePage = () => {
   const [page, setPage] = useState(1);
+  const [yearFilter, setYearFilter] = useState("");
 
-  const { data, error, isPending, isError } = useQuery({
-    queryKey: ['discover', page],
-    queryFn: () => getMovies(page),
+  const { data, error, isPending, isError, isFetching } = useQuery({
+    queryKey: ['discover', page, yearFilter],
+    queryFn: () => getMovies(page, yearFilter),
+    placeholderData: (previousData) => previousData,
   });
 
   if (isPending) {
@@ -32,15 +34,21 @@ const HomePage = () => {
 
   return (
     <>
-      <PageTemplate
-        title='Discover Movies'
-        movies={movies}
-        action={(movie) => <AddToFavoritesIcon movie={movie} />}
-      />
+    <PageTemplate
+  title="Discover Movies"
+  movies={movies}
+  action={(movie) => <AddToFavoritesIcon movie={movie} />}
+  selectedYear={yearFilter}
+  onYearChange={(year) => {
+    setYearFilter(year);
+    setPage(1);
+  }}
+/>
 
       <Box sx={{ display: "flex", justifyContent: "center", padding: 3 }}>
         <Pagination
-          count={Math.min(data.total_pages, 500)}
+          disabled={isFetching || data.total_pages === 0}
+          count={Math.max(1, Math.min(data.total_pages, 500))}
           page={page}
           onChange={(_, value) => { setPage(value);
             window.scrollTo({ top: 0, behavior: "smooth" });

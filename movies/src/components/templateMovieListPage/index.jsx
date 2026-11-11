@@ -4,18 +4,31 @@ import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 
-function MovieListPageTemplate({ movies, title, action }) {
+function MovieListPageTemplate({ movies, title, action, selectedYear, onYearChange,}) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [ratingFilter, setRatingFilter] = useState("0")
-  const [yearFilter, setYearfilter] = useState("");
+  const [localYearFilter, setLocalYearFilter] = useState("");
 
-  // Year options from the movies Loaded on this page.
-  const years = [...new Set(
-    movies
-     .map((movie) => movie.release_date?.slice(0, 4))
-     .filter(Boolean) 
-  )].sort((a, b) => Number(b) - Number(a));
+  const usesApiYearFilter = typeof onYearChange === "function";
+
+  const yearFilter = usesApiYearFilter
+  ? selectedYear
+  : localYearFilter;
+
+// Offer a wider range on Discover Movies, including upcoming releases.
+const latestYear = new Date().getFullYear() + 5;
+
+const years = usesApiYearFilter
+  ? Array.from(
+      { length: latestYear - 1900 + 1 },
+      (_, index) => String(latestYear - index)
+    )
+  : [...new Set(
+      movies
+        .map((movie) => movie.release_date?.slice(0, 4))
+        .filter(Boolean)
+    )].sort((a, b) => Number(b) - Number(a));
 
   const genreId = Number(genreFilter);
 
@@ -34,15 +47,17 @@ const displayedMovies = movies
     movie.vote_average >= Number(ratingFilter)
 )
 .filter((movie) =>
-    yearFilter == "" ||
-    movie.release_date?.slice(0,4) === yearFilter
+  usesApiYearFilter ||
+  yearFilter === "" ||
+  movie.release_date?.slice(0, 4) === yearFilter
 );
 
 const handleChange = (type, value) => {
-    if (type === "name") setNameFilter(value);
-    else if (type === "genre") setGenreFilter(value);
-    else if (type === "rating") setRatingFilter(value);
-    else if (type === "year") setYearfilter(value);
+  if (type === "name") {setNameFilter(value);} 
+  else if (type === "genre") {setGenreFilter(value);} 
+  else if (type === "rating") {setRatingFilter(value);} 
+  else if (type === "year") {if (usesApiYearFilter) {onYearChange(String(value));}
+  else {setLocalYearFilter(String(value));}}
 };
 
 

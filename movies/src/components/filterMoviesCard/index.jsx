@@ -68,7 +68,7 @@ if (isError) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "#2d2f2f", color: "white"
       }} 
       variant="outlined">
       <CardContent>
@@ -104,6 +104,7 @@ if (isError) {
           </Select>
         </FormControl>
         <FormControl sx={{ ...formControl}}>
+
             <Select
             id="rating-select"
             value={props.ratingFilter}

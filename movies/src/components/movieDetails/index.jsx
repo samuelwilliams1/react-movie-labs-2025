@@ -6,8 +6,8 @@ import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect} from "react";
-import {useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import { getMovieWatchProviders } from "../../api/tmdb-api";
@@ -37,44 +37,22 @@ const {
 });
 
 const providers = providersResults?.IE ?? null; // Get the Ireland watch providers or null if not available
-const providersError = providerError?.message || "Error fetching watch providers"; // Get the error message if available
+const providersError = providerError?.message || ""; // Get the error message if available
 
-useEffect(() => {
-    let active = true;
-
-    setProviders(null);
-    setProvidersLoading(true);
-    setProvidersError("");
-
-    getMovieWatchProviders(movie.id)
-        .then(results => {
-           if (active) setProviders(results?.IE ?? null);
-        })
-        .catch(error => {
-            if (active) setProvidersError(error.message);
-        })
-        .finally(() => {
-            if (active) setProvidersLoading(false);
-        });
-
-    return () => {
-        active = false;
-    };
-}, [movie.id]);
 
   return (
     <>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h5" component="h3" sx={{color:"white"}}>
         Overview
       </Typography>
 
-      <Typography variant="h6" component="p">
+      <Typography variant="h6" component="p" sx={{color:"white"}}>
         {movie.overview}
       </Typography>
 
       <Paper 
         component="ul" 
-        sx={{...root}}
+        sx={{...root, backgroundColor:"#2d2f2f", color: "white" }}
       >
         <li>
           <Chip label="Genres" sx={{...chip}} color="primary" />
@@ -85,7 +63,7 @@ useEffect(() => {
           </li>
         ))}
       </Paper>
-      <Paper component="ul" sx={{...root}}>
+      <Paper component="ul" sx={{...root,backgroundColor:"#2d2f2f", color: "white" }}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
           icon={<MonetizationIcon />}
@@ -97,7 +75,7 @@ useEffect(() => {
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
-      <Paper component="ul" sx={{...root}}>
+      <Paper component="ul" sx={{...root, backgroundColor:"#2d2f2f", color: "white"}}>
         <li>
           <Chip label="Production Countries" sx={{...chip}} color="primary" />
         </li>
@@ -108,7 +86,7 @@ useEffect(() => {
         ))}
       </Paper>
 
-      <Paper sx={{ padding: 2, marginTop: 2 }}>
+      <Paper sx={{ padding: 2, marginTop: 2, backgroundColor:"#2d2f2f", color: "white" }}>
         <Typography variant="h5" component="h3">
             Where to Watch - Ireland
         </Typography>
@@ -155,6 +133,7 @@ useEffect(() => {
             href={providers.link}
             target="_blank"
             rel="noopener noreferrer"
+            style={{ color: "white" }}
           >
             View watch options on TMDB
           </a>

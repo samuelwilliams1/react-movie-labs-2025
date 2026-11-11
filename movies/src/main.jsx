@@ -1,3 +1,4 @@
+import "./index.css";
 import TVDetailsPage from "./pages/tvDetailsPage";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import SiteHeader from './components/siteHeader'
@@ -15,6 +16,7 @@ import TVShowsPage from "./pages/tvShowsPage";
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import MustWatchMoviesPage from "./pages/mustWatchMoviesPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 
 const queryClient = new QueryClient({
@@ -27,9 +29,40 @@ const queryClient = new QueryClient({
   },
 });
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#d32f2f",
+    },
+  },
+   components: {
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          color: "#ffffff",
+        },
+        icon: {
+          color: "#ffffff",
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: '"Montserrat", sanss-serif',
+    h1: { fontWeight: 700},
+    h2: {fontweight: 700},
+    h3: {fontweight: 700},
+    h4: {fontweight: 700},
+    h5: {fontweight: 700},
+    h6: {fontweight: 700}
+  },
+});
+
+
+
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}> <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <SiteHeader />
        <MoviesContextProvider>
@@ -51,6 +84,7 @@ const App = () => {
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

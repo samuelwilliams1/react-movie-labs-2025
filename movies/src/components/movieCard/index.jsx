@@ -18,7 +18,7 @@ import { MoviesContext } from "../../contexts/moviesContext";
 
 
 export default function MovieCard({ movie, action }) {
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { favorites} = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -26,14 +26,9 @@ export default function MovieCard({ movie, action }) {
     movie.favorite = false
   }
 
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
-
 
   return (
-    <Card>
+    <Card sx={{ backgroundColor: "#2d2f2f", color: "white"}}>
             <CardHeader
         avatar={
           movie.favorite ? (

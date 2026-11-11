@@ -17,6 +17,8 @@ const Header = (props ) => {
         justifyContent: "space-around",
         flexWrap: "wrap",
         marginBottom: 1.5,
+        backgroundColor: "#202121",
+        color:"white",
       }}
       >
            <IconButton aria-label="go back" onClick={() => navigate(-1)}>
@@ -24,7 +26,7 @@ const Header = (props ) => {
       </IconButton>
 
 
-      <Typography variant="h4" component="h3">
+      <Typography variant="h4" component="h3" sx={{fontWeight: 700}}>
         {title}
       </Typography>
             <IconButton aria-label="go forward" onClick={() => navigate(+1)}>

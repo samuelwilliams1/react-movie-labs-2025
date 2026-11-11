@@ -32,7 +32,7 @@ const SiteHeader = () => {
     { label: "Top Rated", path: "/movies/top-rated" },
     { label: "Must Watch", path: "/movies/mustwatch" },
   ];
-  
+
 
   const handleMenuSelect = (pageURL) => {
     setAnchorEl(null);
@@ -45,12 +45,12 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar position="fixed" color="secondary">
+      <AppBar position="fixed" sx={{ backgroundColor: "red"}}>
         <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            TMDB Client
+          <Typography variant="h4" sx={{ flexGrow: 1, fontWeight: 700 }}>
+            Movinfo
           </Typography>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
             All you ever wanted to know about Movies!
           </Typography>
             {isMobile ? (
@@ -96,6 +96,7 @@ const SiteHeader = () => {
                     key={opt.label}
                     color="inherit"
                     onClick={() => handleMenuSelect(opt.path)}
+                     sx={{fontWeight: 700}}
                   >
                     {opt.label}
                   </Button>

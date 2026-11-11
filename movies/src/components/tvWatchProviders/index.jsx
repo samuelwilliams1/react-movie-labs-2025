@@ -20,7 +20,7 @@ const providers = providerResults?.IE ?? null;
 const providersError = providerError?.message || "";
 
 return (
-    <Paper sx={{ padding: 2, marginTop: 2 }}>
+    <Paper sx={{ padding: 2, marginTop: 2, backgroundColor: "#2d2f2f", color: "white"}}>
         <Typography variant="h5" component="h3">
             Where to Watch - Ireland
         </Typography>
@@ -61,11 +61,12 @@ return (
                 )}
 
                 {providers?.link && (
-                    <Typography sx={{ marginTop: 1 }}>
+                    <Typography sx={{ marginTop: 1, }}>
                         <a
                             href={providers.link}
                             target="_blank"
                             rel="noopener noreferrer"
+                            style={{ color: "white" }}
                         >
                             View watch options on TMDB
                         </a>

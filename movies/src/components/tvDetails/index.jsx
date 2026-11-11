@@ -15,17 +15,17 @@ const chip = { margin: 0.5 };
 export default function TVDetails({ show }) {
   return (
     <>
-      <Typography variant="h5" component="h3">Overview</Typography>
-      <Typography variant="h6" component="p">
+      <Typography variant="h5" component="h3" sx={{color:"white"}}>Overview</Typography>
+      <Typography variant="h6" component="p" sx={{color: "white"}}>
         {show.overview || "No overview available."}
       </Typography>
-      <Paper component="ul" sx={root}>
+      <Paper component="ul" sx={{ ...root, backgroundColor: "#2d2f2f", color: "white"}}>
         <li><Chip label="Genres" sx={chip} color="primary" /></li>
         {show.genres?.map(genre => (
           <li key={genre.id}><Chip label={genre.name} sx={chip} /></li>
         ))}
       </Paper>
-      <Paper sx={root}>
+      <Paper sx={{root, backgroundColor: "#2d2f2f", color: "white"}}>
         {show.episode_run_time?.length > 0 && (
           <Chip sx={chip} icon={<AccessTimeIcon />}
             label={`${show.episode_run_time.join(" / ")} min. per episode`} />
@@ -36,7 +36,7 @@ export default function TVDetails({ show }) {
           label={`${show.vote_average} (${show.vote_count})`} />
         <Chip sx={chip} label={`First aired: ${show.first_air_date || "Unknown"}`} />
       </Paper>
-      <Paper component="ul" sx={root}>
+      <Paper component="ul" sx={{ ...root, backgroundColor: "#2d2f2f", color: "white"}}>
         <li><Chip label="Production Countries" sx={chip} color="primary" /></li>
         {show.production_countries?.map(country => (
           <li key={country.iso_3166_1}><Chip label={country.name} sx={chip} /></li>

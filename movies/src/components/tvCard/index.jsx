@@ -13,7 +13,7 @@ import img from "../../images/film-poster-placeholder.png";
 
 export default function TVCard({ show, action }) {
   return (
-    <Card>
+    <Card sx={{ backgroundColor: "#2d2f2f", color: "white"}}>
             <CardHeader
         title={
           <Typography variant="h5" component="p">

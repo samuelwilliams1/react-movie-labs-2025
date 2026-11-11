@@ -29,12 +29,12 @@ export default function TVDetailsPage() {
   if (isPending) {
     return <Typography>Loading TV details...</Typography>;
   }
-  
+
   return (
     <>
-      <Paper sx={{ padding: 2, marginBottom: 2, textAlign: "center" }}>
+      <Paper sx={{ padding: 2, marginBottom: 2, textAlign: "center", backgroundColor: "#202121", color: "white"}}>
         <Button component={Link} to="/tv">Back to TV Shows</Button>
-        <Typography variant="h4" component="h1">{show.name}</Typography>
+        <Typography variant="h4" component="h1" sx={{color: "white", fontWeight: 700}}>{show.name}</Typography>
         {show.tagline && <Typography variant="h6">{show.tagline}</Typography>}
       </Paper>
       <Grid container spacing={3} sx={{ padding: 2 }}>

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import StarRate from "@mui/icons-material/StarRate";
 import TVWatchProviders from "../tvWatchProviders";
+import TVTrailer from "../tvTrailer"
 
 const root = {
   display: "flex", justifyContent: "center", flexWrap: "wrap",
@@ -19,6 +20,9 @@ export default function TVDetails({ show }) {
       <Typography variant="h6" component="p" sx={{color: "white"}}>
         {show.overview || "No overview available."}
       </Typography>
+
+      <TVTrailer key={show.id} show={show} />
+      
       <Paper component="ul" sx={{ ...root, backgroundColor: "#2d2f2f", color: "white"}}>
         <li><Chip label="Genres" sx={chip} color="primary" /></li>
         {show.genres?.map(genre => (

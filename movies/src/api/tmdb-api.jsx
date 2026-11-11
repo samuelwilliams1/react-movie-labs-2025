@@ -165,3 +165,32 @@ export const getTVShow = (id) => {
     return res.json();
   });
 };
+
+  export const getMovieVideos = async (id) => {
+    const response = await fetch(
+     `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`   
+    );
+
+    const json = await response.json();
+
+    if (!response.ok || json.success === false) {
+        throw new Error(json.status_message || "Could not load trailers.");
+    }
+  return json.results ?? [];
+};
+
+export const getTVVideos = async (id) => {
+    const response = await fetch(
+     `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`   
+    );
+
+    const json = await response.json();
+
+    if (!response.ok || json.success === false) {
+        throw new Error(json.status_message || "Could not load trailers.");
+    }
+  return json.results ?? [];
+};
+
+
+

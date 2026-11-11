@@ -1,3 +1,4 @@
+import MovieTrailer from "../movieTrailer";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -50,6 +51,8 @@ const providersError = providerError?.message || ""; // Get the error message if
         {movie.overview}
       </Typography>
 
+      <MovieTrailer key={movie.id} movie={movie} />
+      
       <Paper 
         component="ul" 
         sx={{...root, backgroundColor:"#2d2f2f", color: "white" }}
